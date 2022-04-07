@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import waa.labs.lab5.dtos.CommentDto;
 import waa.labs.lab5.dtos.UserDto;
-import waa.labs.lab5.dtos.response.ResponsePostDto;
+import waa.labs.lab5.dtos.response.PostResponseDto;
 import waa.labs.lab5.entities.Comment;
 import waa.labs.lab5.entities.Post;
 import waa.labs.lab5.entities.User;
@@ -27,7 +27,7 @@ public class UserService implements IUserService {
     private final ModelMapper modelMapper;
 
     private final ListMapper<User, UserDto> userListToDtoMapper;
-    private final ListMapper<Post, ResponsePostDto> postListToDtoMapper;
+    private final ListMapper<Post, PostResponseDto> postListToDtoMapper;
     private final ListMapper<Comment, CommentDto> commentListToDtoMapper;
 
     @Autowired
@@ -36,7 +36,7 @@ public class UserService implements IUserService {
             IPostRepo postRepo,
             ModelMapper modelMapper,
             ListMapper<User, UserDto> userListMapper,
-            ListMapper<Post, ResponsePostDto> postListMapper,
+            ListMapper<Post, PostResponseDto> postListMapper,
             ListMapper<Comment, CommentDto> commentListMapper
     ) {
         this.userRepo = userRepo;
@@ -65,7 +65,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public void savePostByUser(long userId, ResponsePostDto postDto) {
+    public void savePostByUser(long userId, PostResponseDto postDto) {
         User desiredUser = userRepo.findById(userId).orElse(null);
         if (desiredUser != null) {
             Post newPost = new Post();
@@ -104,11 +104,11 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public List<ResponsePostDto> getPostsByUser(long userId) {
+    public List<PostResponseDto> getPostsByUser(long userId) {
         var user = userRepo.findById(userId).orElse(null);
         if (user == null)
             return new ArrayList<>();
-        return postListToDtoMapper.mapList(user.getPosts(), ResponsePostDto.class);
+        return postListToDtoMapper.mapList(user.getPosts(), PostResponseDto.class);
     }
 
     @Override

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import waa.labs.lab5.aspects.annotations.ExecutionTime;
 import waa.labs.lab5.dtos.CommentDto;
 import waa.labs.lab5.dtos.UserDto;
-import waa.labs.lab5.dtos.response.ResponsePostDto;
+import waa.labs.lab5.dtos.response.PostResponseDto;
 import waa.labs.lab5.services.IUserService;
 
 import java.util.List;
@@ -41,7 +41,7 @@ public class UserController {
     }
 
     @GetMapping("/{userId}/posts")
-    public List<ResponsePostDto> getPostsByUser(@PathVariable long userId) {
+    public List<PostResponseDto> getPostsByUser(@PathVariable long userId) {
         return userService.getPostsByUser(userId);
     }
 
@@ -62,7 +62,7 @@ public class UserController {
     }
 
     @PostMapping("/{userId}/posts")
-    public void savePostByUser(@PathVariable long userId, @RequestBody ResponsePostDto postDto) {
+    public void savePostByUser(@PathVariable long userId, @RequestBody PostResponseDto postDto) {
         userService.savePostByUser(userId, postDto);
     }
 

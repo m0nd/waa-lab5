@@ -2,8 +2,8 @@ package waa.labs.lab5.controllers;
 
 import org.springframework.web.bind.annotation.*;
 import waa.labs.lab5.dtos.CommentDto;
-import waa.labs.lab5.dtos.request.RequestPostDto;
-import waa.labs.lab5.dtos.response.ResponsePostDto;
+import waa.labs.lab5.dtos.request.PostRequestDto;
+import waa.labs.lab5.dtos.response.PostResponseDto;
 import waa.labs.lab5.services.IPostService;
 
 import java.util.List;
@@ -18,13 +18,13 @@ public class PostController {
     }
 
     @GetMapping
-    public List<ResponsePostDto> getAllPosts(@RequestParam(name = "title", required = false) String postTitle) {
+    public List<PostResponseDto> getAllPosts(@RequestParam(name = "title", required = false) String postTitle) {
         return postTitle != null ? postService.getPostsWithTitleMatching(postTitle) : postService.getAllPosts();
     }
 
 
     @GetMapping("/{postId}")
-    public ResponsePostDto getPostById(@PathVariable long postId) {
+    public PostResponseDto getPostById(@PathVariable long postId) {
         return postService.getPostById(postId);
     }
 
@@ -35,7 +35,7 @@ public class PostController {
     }
 
     @PostMapping
-    public void savePost(@RequestBody RequestPostDto postDto) {
+    public void savePost(@RequestBody PostRequestDto postDto) {
         postService.savePost(postDto);
     }
 
@@ -47,7 +47,7 @@ public class PostController {
 
 
     @PutMapping("/{postId}")
-    public void updatePost(@PathVariable long postId, @RequestBody RequestPostDto postDto) {
+    public void updatePost(@PathVariable long postId, @RequestBody PostRequestDto postDto) {
         postService.updatePost(postId, postDto);
     }
 

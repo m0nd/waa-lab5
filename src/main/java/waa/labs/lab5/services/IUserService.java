@@ -2,7 +2,7 @@ package waa.labs.lab5.services;
 
 import waa.labs.lab5.dtos.CommentDto;
 import waa.labs.lab5.dtos.UserDto;
-import waa.labs.lab5.dtos.response.ResponsePostDto;
+import waa.labs.lab5.dtos.response.PostResponseDto;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ public interface IUserService {
 
     void saveUser(UserDto userDto);
 
-    void savePostByUser(long userId, ResponsePostDto postDto);
+    void savePostByUser(long userId, PostResponseDto postDto);
 
     void saveCommentByUser(long userId, long postId, CommentDto commentDto);
 
@@ -21,7 +21,7 @@ public interface IUserService {
 
     void deleteUserById(long userId);
 
-    List<ResponsePostDto> getPostsByUser(long userId);
+    List<PostResponseDto> getPostsByUser(long userId);
 
     List<UserDto> getUsersWithPostsMoreThan(int minNumPosts);
 
