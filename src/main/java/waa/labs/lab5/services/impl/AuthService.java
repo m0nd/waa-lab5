@@ -30,7 +30,8 @@ public class AuthService implements IAuthService {
              password from the loginRequest
              */
             authManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+                    new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword())
+            );
         }
         catch (BadCredentialsException bcEx) {
             log.info("Bad Credentials Specified");
@@ -40,7 +41,7 @@ public class AuthService implements IAuthService {
         // Generate our access and refresh tokens
         String accessToken = jwtUtil.generateToken(userDetails);
         String refreshToken = jwtUtil.generateRefreshToken();
-        
+
         return new LoginResponseDto(accessToken, refreshToken);
     }
 
