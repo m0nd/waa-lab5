@@ -7,8 +7,10 @@ import waa.labs.lab5.entities.User;
 import java.util.List;
 
 public interface IUserRepo extends CrudRepository<User, Long> {
-    @Override
+
     List<User> findAll();
+
+    User findByEmail();
 
     @Query("select u from User u where size(u.posts) > :minNumPosts")
     List<User> findHavingPostsMoreThan(int minNumPosts);

@@ -22,11 +22,16 @@ public class User {
     long id;
 
     private String name;
+    private String email;
+    private String password;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @Fetch(FetchMode.SELECT)
     @JoinColumn(name = "author_id")
     private List<Post> posts;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Role> roles;
 
     public void addPost(Post newPost) {
         posts.add(newPost);
