@@ -4,5 +4,5 @@ import org.springframework.data.repository.CrudRepository;
 import waa.labs.lab5.entities.Role;
 
 public interface IRoleRepo extends CrudRepository<Role, Integer> {
-    Role findByName();
+    Role findByName(String roleName);
 }

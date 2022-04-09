@@ -1,7 +1,9 @@
 package waa.labs.lab5.config;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -21,7 +23,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder authManagerBuilder) throws Exception {
-        // Set the user details service of our authentication manager with our
+        // Set the user details service of our authentication manager with our user details service implementation
         authManagerBuilder.userDetailsService(userDetailsService);
     }
 
@@ -33,8 +35,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 // Set permissions on endpoints
                 .authorizeRequests()
                 .antMatchers("/api/vi/authenticate/**").permitAll()
-                .antMatchers("/api/v1/admin").hasAuthority("ADMIN")
-                .antMatchers("/api/v1/users").hasAuthority("ADMIN")
+                .antMatchers("/api/v1/admin/**").hasAuthority("ADMIN")
+                .antMatchers("/api/v1/users").hasAuthority("CLIENT")
                 .antMatchers("/api/v1/posts").hasAuthority("CLIENT")
                 .anyRequest()
                 .authenticated()
@@ -42,5 +44,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         // Apply our JWT filter before Spring's UsernamePasswordAuthenticationFilter
         httpSecurity.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+    }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 }

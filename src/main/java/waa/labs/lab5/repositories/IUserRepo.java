@@ -10,7 +10,7 @@ public interface IUserRepo extends CrudRepository<User, Long> {
 
     List<User> findAll();
 
-    User findByEmail();
+    User findByEmail(String email);
 
     @Query("select u from User u where size(u.posts) > :minNumPosts")
     List<User> findHavingPostsMoreThan(int minNumPosts);

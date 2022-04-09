@@ -14,8 +14,8 @@ public class Lab5UserDetailsService implements UserDetailsService {
     IUserRepo userRepo;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        var user = userRepo.findByEmail();
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        var user = userRepo.findByEmail(email);
         return new Lab5UserDetails(user);
     }
 }

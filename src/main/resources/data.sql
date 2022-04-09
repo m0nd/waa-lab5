@@ -10,22 +10,22 @@ VALUES (102, 'Kyle', 'kyle@miu.edu', '$2a$12$IKEQb00u5QpZMx4v5zMweu.3wrq0pS7XLCH
 
 
 -- ROLES
-INSERT INTO role (id, role)
+INSERT INTO role (id, name)
 VALUES (1, 'ADMIN')  ON CONFLICT DO NOTHING ;
 
-INSERT INTO role (id, role)
+INSERT INTO role (id, name)
 VALUES (2, 'CLIENT')  ON CONFLICT DO NOTHING ;
 
 
 -- USERS_ROLES
-INSERT INTO users_roles (user_id, role_id)
-VALUES (1, 1) ON CONFLICT DO NOTHING ;
+INSERT INTO users_roles (user_id, roles_id)
+VALUES (100, 1) ON CONFLICT DO NOTHING ;
 
-INSERT INTO users_roles (user_id, role_id)
-VALUES (2, 2) ON CONFLICT DO NOTHING ;
+INSERT INTO users_roles (user_id, roles_id)
+VALUES (101, 2) ON CONFLICT DO NOTHING ;
 
-INSERT INTO users_roles (user_id, role_id)
-VALUES (3, 2) ON CONFLICT DO NOTHING ;
+INSERT INTO users_roles (user_id, roles_id)
+VALUES (102, 2) ON CONFLICT DO NOTHING ;
 
 
 -- POSTS
