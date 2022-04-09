@@ -30,9 +30,9 @@ public class ExceptionTrackerAspect {
         this.saveException(curDate, curTime, ExceptionTracker.PRINCIPLE_NAME,
                 joinPoint.getSignature().getName(), ex.getClass().getName());
         System.out.println("Saving an Exception...");
-        System.out.printf("Date: %s\nTime: %s\nPrinciple: %s\nOperation: %s\nException Type: %s\n\n",
+        System.out.printf("Date: %s\nTime: %s\nPrinciple: %s\nOperation: %s\nException Type: %s\nException Message: %s\n\n",
                 curDate, curTime, ExceptionTracker.PRINCIPLE_NAME, joinPoint.getSignature().getName(),
-                ex.getClass().getName());
+                ex.getClass().getName(), ex.getMessage());
     }
 
     public void saveException(LocalDate curDate, LocalTime curTime, String principle, String op, String exType) {

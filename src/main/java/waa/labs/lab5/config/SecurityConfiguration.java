@@ -9,8 +9,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import waa.labs.lab5.filters.JwtFilter;
 
@@ -34,10 +35,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 // Set permissions on endpoints
                 .authorizeRequests()
-                .antMatchers("/api/vi/authenticate/**").permitAll()
-                .antMatchers("/api/v1/admin/**").hasAuthority("ADMIN")
-                .antMatchers("/api/v1/users").hasAuthority("CLIENT")
-                .antMatchers("/api/v1/posts").hasAuthority("CLIENT")
+                .antMatchers("/api/v1/authenticate/**").permitAll()
+                .antMatchers("/api/v1/admin").hasAuthority("ADMIN")
+                .antMatchers("/api/v1/users").hasAnyAuthority("USER", "ADMIN")
+                .antMatchers("/api/v1/posts").hasAnyAuthority("USER", "ADMIN")
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -50,5 +51,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

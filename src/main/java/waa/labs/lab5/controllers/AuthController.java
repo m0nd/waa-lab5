@@ -8,7 +8,6 @@ import waa.labs.lab5.services.IAuthService;
 
 @RestController
 @RequestMapping("/api/v1/authenticate")
-@CrossOrigin
 public class AuthController {
 
     private final IAuthService authService;

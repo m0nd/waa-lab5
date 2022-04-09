@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
@@ -34,15 +35,19 @@ public class AuthService implements IAuthService {
             );
         }
         catch (BadCredentialsException bcEx) {
+            System.out.println("Bad Credentials Specified");
             log.info("Bad Credentials Specified");
+        }
+        catch (AuthenticationException authEx) {
+            System.out.println(authEx.getMessage());
         }
 
         // Get user details using our UserDetailsService
         final UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getEmail());
 
         // Generate our access and refresh tokens
-        String accessToken = jwtUtil.generateToken(userDetails);
-        String refreshToken = jwtUtil.generateRefreshToken(loginRequest.getEmail());
+        final String accessToken = jwtUtil.generateToken(userDetails);
+        final String refreshToken = jwtUtil.generateRefreshToken(loginRequest.getEmail());
 
         return new LoginResponseDto(accessToken, refreshToken);
     }

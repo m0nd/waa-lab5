@@ -13,9 +13,14 @@ import javax.transaction.Transactional;
 public class Lab5UserDetailsService implements UserDetailsService {
     IUserRepo userRepo;
 
+    public Lab5UserDetailsService(IUserRepo userRepo) {
+        this.userRepo = userRepo;
+    }
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         var user = userRepo.findByEmail(email);
+
         return new Lab5UserDetails(user);
     }
 }
