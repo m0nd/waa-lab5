@@ -18,8 +18,8 @@ import java.util.Map;
 public class JwtUtil {
     // Note: Normally we would store our secret in an environment var
     private final Key secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS512);
-    private final long accessExpiration = 5 * 60 * 60 * 60; // ~18mins
-    private final long refreshExpiration = 5 * 60 * 60 * 60 * 60; // ~18hrs
+    private final long accessExpiration = 10 * 60 * 1000; // 10mins
+    private final long refreshExpiration = 30 * 60 * 1000; // ~30mins
 
     /*
     Take the user details and use the helper method doGenerateToken()
