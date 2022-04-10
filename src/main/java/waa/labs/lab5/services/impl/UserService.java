@@ -58,6 +58,11 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public UserDto getUserByEmail(String email) {
+        return modelMapper.map(userRepo.findByEmail(email), UserDto.class);
+    }
+
+    @Override
     public void saveUser(UserDto userDto) {
         User newUser = new User();
         newUser.setName(userDto.getName());

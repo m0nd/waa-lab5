@@ -55,7 +55,7 @@ public class JwtFilter extends OncePerRequestFilter {
             var userDetails = userDetailsService.loadUserByUsername(email);
             boolean isValidToken = jwtUtil.validateToken(token);
             if (isValidToken) {
-                // Get an authentication instance using the user details
+                // Get an authentication instance using the user details. We don't have the password here so we set arg to null
                 UsernamePasswordAuthenticationToken userAuth = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 
                 // Set the details of our auth instance using a Details object obtained from the HTTP request

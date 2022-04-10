@@ -11,6 +11,8 @@ public interface IUserService {
 
     UserDto getUserById(long userId);
 
+    UserDto getUserByEmail(String email);
+
     void saveUser(UserDto userDto);
 
     void savePostByUser(long userId, PostResponseDto postDto);
