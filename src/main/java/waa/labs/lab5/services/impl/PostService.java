@@ -14,6 +14,7 @@ import waa.labs.lab5.services.IPostService;
 import waa.labs.lab5.utils.ListMapper;
 
 import javax.transaction.Transactional;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,8 +67,8 @@ public class PostService implements IPostService {
     }
 
     @Override
-    public void savePost(PostRequestDto postDto) {
-        var desiredUser = userRepo.findById(postDto.getAuthorId()).orElse(null);
+    public void savePost(PostRequestDto postDto, Principal principal) {
+        var desiredUser = userRepo.findByEmail(principal.getName());
         if (desiredUser != null) {
             Post newPost = new Post();
             newPost.setTitle(postDto.getTitle());

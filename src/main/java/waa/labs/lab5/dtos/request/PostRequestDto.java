@@ -7,5 +7,4 @@ public class PostRequestDto {
     long id;
     String title;
     String content;
-    long authorId;
 }

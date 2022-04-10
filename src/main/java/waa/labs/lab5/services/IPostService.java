@@ -4,6 +4,7 @@ import waa.labs.lab5.dtos.CommentDto;
 import waa.labs.lab5.dtos.request.PostRequestDto;
 import waa.labs.lab5.dtos.response.PostResponseDto;
 
+import java.security.Principal;
 import java.util.List;
 
 public interface IPostService {
@@ -15,7 +16,7 @@ public interface IPostService {
 
     List<CommentDto> getAllPostComments(long postId);
 
-    void savePost(PostRequestDto postDto);
+    void savePost(PostRequestDto postDto, Principal principal);
 
     void saveCommentForPost(long postId, CommentDto commentDto);
 

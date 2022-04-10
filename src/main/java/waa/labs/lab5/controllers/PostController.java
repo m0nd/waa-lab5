@@ -6,6 +6,7 @@ import waa.labs.lab5.dtos.request.PostRequestDto;
 import waa.labs.lab5.dtos.response.PostResponseDto;
 import waa.labs.lab5.services.IPostService;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -35,8 +36,8 @@ public class PostController {
     }
 
     @PostMapping
-    public void savePost(@RequestBody PostRequestDto postDto) {
-        postService.savePost(postDto);
+    public void savePost(@RequestBody PostRequestDto postDto, Principal principal) {
+        postService.savePost(postDto, principal);
     }
 
 
