@@ -12,7 +12,9 @@ import org.springframework.stereotype.Service;
 import waa.labs.lab5.dtos.request.LoginRequestDto;
 import waa.labs.lab5.dtos.request.RefreshTokenRequestDto;
 import waa.labs.lab5.dtos.response.LoginResponseDto;
+import waa.labs.lab5.entities.RefreshToken;
 import waa.labs.lab5.services.IAuthService;
+import waa.labs.lab5.services.IRefreshTokenService;
 import waa.labs.lab5.utils.JwtUtil;
 
 @Service
@@ -22,6 +24,7 @@ public class AuthService implements IAuthService {
     private final AuthenticationManager authManager;
     private final UserDetailsService userDetailsService;
     private final JwtUtil jwtUtil;
+    IRefreshTokenService refreshTokenService;
 
     @Override
     public LoginResponseDto login(LoginRequestDto loginRequest) {
@@ -49,11 +52,15 @@ public class AuthService implements IAuthService {
         final String accessToken = jwtUtil.generateToken(userDetails);
         final String refreshToken = jwtUtil.generateRefreshToken(loginRequest.getEmail());
 
+        // Save refresh token to DB
+        refreshTokenService.saveRefreshToken(new RefreshToken(refreshToken));
+
         return new LoginResponseDto(accessToken, refreshToken);
     }
 
     @Override
     public LoginResponseDto refreshToken(RefreshTokenRequestDto token) {
+
         return null;
     }
 }
