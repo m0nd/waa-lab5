@@ -34,7 +34,7 @@ public class JwtFilter extends OncePerRequestFilter {
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             token = authHeader.substring(7);
             try {
-                email = jwtUtil.getUsernameFromToken(token);
+                email = jwtUtil.getSubjectFromToken(token);
             }
             catch(ExpiredJwtException eJwtEx) {
                 System.out.println("JWToken has expired: " + eJwtEx.getMessage());
@@ -63,6 +63,9 @@ public class JwtFilter extends OncePerRequestFilter {
 
                 // Set our Security Context with our user auth
                 SecurityContextHolder.getContext().setAuthentication(userAuth);
+            }
+            else {
+                System.out.println("Token is Invalid");
             }
         }
 

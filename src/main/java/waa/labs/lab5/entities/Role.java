@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import waa.labs.lab5.utils.UserRole;
 
 import javax.persistence.*;
 import java.util.List;
@@ -19,5 +20,7 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String name;
+    @Enumerated(EnumType.STRING)
+    @Column(unique = true)
+    private UserRole role;
 }

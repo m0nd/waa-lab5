@@ -19,7 +19,7 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+    Long id;
 
     private String name;
     private String email;
@@ -36,4 +36,6 @@ public class User {
     public void addPost(Post newPost) {
         posts.add(newPost);
     }
+
+    public void addRole(Role newRole) { roles.add(newRole); }
 }

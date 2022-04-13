@@ -6,6 +6,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -18,8 +19,8 @@ import java.util.Map;
 public class JwtUtil {
     // Note: Normally we would store our secret in an environment var
     private final Key secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS512);
-    private final long accessExpiration = 10 * 60 * 1000; // 10mins
-    private final long refreshExpiration = 30 * 60 * 1000; // ~30mins
+    private final long accessExpiration = 2 * 60 * 1000; // 2 mins
+    private final long refreshExpiration = 30 * 60 * 1000; // ~30 mins
 
     /*
     Take the user details and use the helper method doGenerateToken()
@@ -28,6 +29,10 @@ public class JwtUtil {
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
         return buildToken(claims, userDetails.getUsername());
+    }
+
+    public String generateAccessToken(String subject) {
+        return buildToken(subject, accessExpiration);
     }
 
     public String buildToken(Map<String, Object> claims, String subject) {
@@ -40,16 +45,20 @@ public class JwtUtil {
                 .compact();
     }
 
-    public String generateRefreshToken(String email) {
+    public String buildToken(String subject, long expiration) {
         return Jwts.builder()
-                .setSubject(email)
+                .setSubject(subject)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + refreshExpiration))
+                .setExpiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(secretKey)
                 .compact();
     }
 
-    public String getUsernameFromToken(String token) {
+    public String generateRefreshToken(String subject) {
+        return buildToken(subject, refreshExpiration);
+    }
+
+    public String getSubjectFromToken(String token) {
         String result = null;
         try {
             result = Jwts.parserBuilder()
@@ -84,7 +93,6 @@ public class JwtUtil {
             System.out.println(jwtEx.getMessage());
         }
 
-        // might need to place this return in a finally block?
         return false;
     }
 }

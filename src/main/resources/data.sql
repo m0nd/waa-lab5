@@ -10,10 +10,10 @@ VALUES (102, 'Kyle', 'kyle@miu.edu', '$2a$12$IKEQb00u5QpZMx4v5zMweu.3wrq0pS7XLCH
 
 
 -- ROLES
-INSERT INTO role (id, name)
+INSERT INTO role (id, role)
 VALUES (1, 'ADMIN')  ON CONFLICT DO NOTHING ;
 
-INSERT INTO role (id, name)
+INSERT INTO role (id, role)
 VALUES (2, 'USER')  ON CONFLICT DO NOTHING ;
 
 

@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Lab5UserDetails implements UserDetails {
+    Long id;
+
     String email;
 
     @JsonIgnore
@@ -20,6 +22,7 @@ public class Lab5UserDetails implements UserDetails {
     List<Role> roles;
 
     public Lab5UserDetails(User user) {
+        this.id = user.getId();
         this.email = user.getEmail();
         this.password = user.getPassword();
         this.roles = user.getRoles();
@@ -28,9 +31,11 @@ public class Lab5UserDetails implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles.stream()
-                .map(role -> new SimpleGrantedAuthority(role.getName()))
+                .map(role -> new SimpleGrantedAuthority(role.getRole().name()))
                 .collect(Collectors.toList());
     }
+    
+    public Long getId() { return id; }
 
     @Override
     public String getPassword() {
