@@ -35,7 +35,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 // Set permissions on endpoints
                 .authorizeRequests()
-                .antMatchers("/api/v1/authenticate/**").permitAll()
+                .antMatchers("/api/v1/auth/**").permitAll()
                 .antMatchers("/api/v1/admin").hasAuthority("ADMIN")
                 .antMatchers("/api/v1/users").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers("/api/v1/posts").hasAnyAuthority("USER", "ADMIN")

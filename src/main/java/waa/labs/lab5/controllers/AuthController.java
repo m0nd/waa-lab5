@@ -20,14 +20,18 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequestDto loginRequestDto) {
-        var loginResponse = authService.login(loginRequestDto);
-        return ResponseEntity.ok(loginResponse);
+        try {
+            return ResponseEntity.ok().body(authService.login(loginRequestDto));
+        }
+        catch (Exception ex) {
+            return ResponseEntity.badRequest().body(new MessageResponseDto(ex.getMessage()));
+        }
     }
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequestDto registerRequestDto) {
         try {
-            return ResponseEntity.ok(authService.register(registerRequestDto));
+            return ResponseEntity.ok().body(authService.register(registerRequestDto));
         }
         catch (Exception ex) {
             return ResponseEntity.badRequest().body(new MessageResponseDto(ex.getMessage()));

@@ -46,7 +46,7 @@ public class AuthService implements IAuthService {
     private final IRoleRepo roleRepo;
 
     @Override
-    public LoginResponseDto login(LoginRequestDto loginRequest) {
+    public LoginResponseDto login(LoginRequestDto loginRequest) throws Exception {
         try {
             /*
              Authenticate the principal (user) using the username and
@@ -127,12 +127,12 @@ public class AuthService implements IAuthService {
 
         // If the user did not previously have a refresh token then they cannot be given a refresh/access token
         if (storedRefreshToken == null || !storedRefreshToken.getBody().equals(userRefreshToken)) {
-            throw new Exception("Invalid Refresh Token Submitted");
+            throw new Exception("Invalid Refresh Token Submitted. You need to re-authenticate");
         }
 
         // Validate the user's refresh token
         if (!jwtUtil.validateToken(userRefreshToken)) {
-            throw new Exception("Refresh Token may have Expired");
+            throw new Exception("Refresh Token may have Expired. You need to re-authenticate");
         }
 
         String subject = jwtUtil.getSubjectFromToken(userRefreshToken);

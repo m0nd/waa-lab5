@@ -8,7 +8,7 @@ import waa.labs.lab5.dtos.response.MessageResponseDto;
 import waa.labs.lab5.dtos.response.RefreshTokenResponseDto;
 
 public interface IAuthService {
-    LoginResponseDto login(LoginRequestDto loginRequestDto);
+    LoginResponseDto login(LoginRequestDto loginRequestDto) throws Exception;
     MessageResponseDto register(RegisterRequestDto registerRequestDto) throws Exception;
     RefreshTokenResponseDto refreshToken(RefreshTokenRequestDto token) throws Exception;
 }
